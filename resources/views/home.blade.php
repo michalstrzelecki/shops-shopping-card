@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto min-h-screen bg-gray-50 sm:px-6 lg:px-8">
+    <div class="container mx-auto min-h-screen sm:px-6 lg:px-8">
         <div class="flex justify-end py-6">
-            <x-shopping-cart></x-shopping-cart>
+            <livewire:shopping-cart />
+
             @if (Route::has('login'))
                 <div class="space-x-4">
                     @auth
