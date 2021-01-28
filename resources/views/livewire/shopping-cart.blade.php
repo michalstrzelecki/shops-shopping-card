@@ -38,7 +38,7 @@
 
         <div class="px-4 py-2 mt-4 text-sm capitalize text-gray-700 flex flex-row justify-between">
             <span class="font-bold mr-2">Total:</span>
-            <span>{{ $totalPrice }} &euro;</span>
+            <span>{{ $totalPrice . ' '}} &euro;</span>
         </div>
     </div>
 </span>
