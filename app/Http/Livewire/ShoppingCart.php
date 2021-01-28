@@ -12,14 +12,31 @@ class ShoppingCart extends Component
 
     public $totalPrice = 0;
 
-    public function addProduct(Product $product) {
-        $this->totalPrice = $this->totalPrice + round(floatval($product->price), 2);
+    protected $listeners = [
+        'addToCart' => 'onAddToCart',
+        'removeFromCart' => 'onRemoveFromCart'
+    ];
+
+    public function onAddToCart(Product $product) {
+        $this->totalPrice = $this->totalPrice + $this->formatPrice($product->price);
         $this->cart[] = $product->toArray();
     }
 
-    public function removeProduct(int $index) {
-        $this->totalPrice = $this->totalPrice - round(floatval($this->cart[$index]['price']), 2);
-        $this->cart = Arr::except($this->cart, [$index]);
+    public function onRemoveFromCart(int $id) {
+        $itemKey = null;
+        foreach ($this->cart as $key => $item) {
+            if ($item['id'] === $id) {
+                $itemKey = $key;
+                break;
+            }
+        }
+
+        $this->totalPrice = $this->totalPrice - $this->formatPrice($this->cart[$itemKey]['price']);
+        unset($this->cart[$itemKey]);
+    }
+
+    private function formatPrice(float $price) {
+        return round(floatval($price), 2);
     }
 
     public function render()
